@@ -10,6 +10,7 @@ const Navbar: React.FC = () => {
     const location = useLocation();
     const { authenticationStore } = useStores();
 
+    const path =!authenticationStore.isAuthenticated? '/' : authenticationStore.UserType === "Maitre" ? '/MaitreApprentissage/dashboard' : '/apprenti/dashboard'
 
     const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, isAuthenticated: boolean) => {
       if (isAuthenticated) {
@@ -26,7 +27,7 @@ const Navbar: React.FC = () => {
   
           {/* This div is for the AppName which you want at the start */}
           <div className="text-lg font-semibold text-main-color">
-            <Link to="/" className="text-main-color font-semibold	flex items-center text-2xl	">
+            <Link to={path} className="text-main-color font-semibold	flex items-center text-2xl	">
                 <img src={logo}  className="mr-5 ml-16 h-11 w-11"  /> Talents
             </Link>
           </div>
@@ -45,7 +46,7 @@ const Navbar: React.FC = () => {
   </li>
   <li className='flex'>
     <NavLink 
-      to={authenticationStore.isAuthenticated ? "/MaitreApprentissage/dashboard": "/MaitreApprentissage/signUpMaitre"} 
+      to={authenticationStore.isAuthenticated ? "/MaitreApprentissage/dashboard": "/MaitreApprentissage/signIn"} 
       className={() => getNavLinkClass('/MaitreApprentissage')}
       onClick={(e) => handleNavLinkClick(e, authenticationStore.isAuthenticated)}
       >
@@ -58,6 +59,8 @@ const Navbar: React.FC = () => {
       className={({ isActive }) => 
         `${isActive ? "bg-nav-bar-selected" : "text-gray-200"} transition-all duration-300 ease-in-out text-sm font-semibold px-4 text-center rounded-full min-h-7 min-w-40 flex justify-center items-center`
       }
+      onClick={(e) => handleNavLinkClick(e, authenticationStore.isAuthenticated)}
+
     >
       Référent CFA
     </NavLink>

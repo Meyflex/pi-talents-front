@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '../stores';
+import { useStores } from '../../stores';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';

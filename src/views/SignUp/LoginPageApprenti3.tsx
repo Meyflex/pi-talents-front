@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '../stores';
+import { useStores } from '../../stores';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../services';
+import { api } from '../../services';
 import Cookies from 'js-cookie';
 
 
@@ -61,6 +61,8 @@ function base64ToBlob(base64: string, contentType: string): Blob {
         Cookies.set('userToken', token,{secure:true});    
         authenticationStore.setAuthToken(token);
         authenticationStore.setAuthEmail(email);
+        authenticationStore.setUserType("Apprenti");
+        authenticationStore.setUserJson(response.data)
         navigate('/apprenti/dashboard')
       } catch (error) {
         console.error('Error sending data:', error);
@@ -138,7 +140,7 @@ function base64ToBlob(base64: string, contentType: string): Blob {
                 <div className="text-red-500 text-sm min-h-[20px]">{errors.email && touched.email && errors.email}</div>
               </div>
               <div className="mt-2 w-full2 row-start-5 col-start-2 flex justify-end">
-                <button type="submit" className="mt-4  bg-blue text-white  font-bold py-2 px-4 rounded hover:bg-blue-700 max-w-32">
+                <button type="submit" className="mt-4 w-40 bg-blue text-white  font-bold py-2 px-4 rounded hover:bg-blue-700 max-w-32">
                     J’envoie
                 </button>
             </div>

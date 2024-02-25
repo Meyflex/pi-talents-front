@@ -11,7 +11,9 @@ export default {
     colors: {
       'main-color':'#252A34',
      'nav-bar-selected':'#F15412',
-     'blue':'#00ADB5'
+     'blue':'#00ADB5',
+     'lightGray':'#393E46',
+     'lightText':'#878a8f'
     },
     },
   },

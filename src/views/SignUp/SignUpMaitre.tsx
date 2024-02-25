@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '../stores';
+import { useStores } from '../../stores';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, useParams } from 'react-router-dom';
-import { api } from '../services';
+import { api } from '../../services';
 import Cookies from 'js-cookie';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -43,12 +43,13 @@ const validationSchema = Yup.object().shape({
             },
           });
       
-          console.log(response.data); 
           const { token } = response.data;
           const { email } = response.data.maitre;
           Cookies.set('userToken', token,{secure:true});    
           authenticationStore.setAuthToken(token);
           authenticationStore.setAuthEmail(email);
+          authenticationStore.setUserType("Maitre");
+          authenticationStore.setUserJson(response.data);
           navigate('/MaitreApprentissage/dashboard')
         } catch (error : any) {
           console.error('Error sending data:', error.message);
@@ -81,7 +82,7 @@ const validationSchema = Yup.object().shape({
         
         }}
       >
-        {({ handleSubmit, setFieldValue, errors, touched }) => (
+        {({ handleSubmit, errors, touched }) => (
           <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-4 grid-flow-row'>
           
             
@@ -123,7 +124,7 @@ const validationSchema = Yup.object().shape({
                   type="email"
                   name="email"
                   id="email"
-                  placeholder='ex : back end development'
+                  placeholder='Pi-talents@mail.com'
                   className="min-w-96 outline-none p-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-main-color placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-nav-bar-selected sm:text-sm sm:leading-6"
                 />
                 <div className="text-red-500 text-sm min-h-[20px]">{errors.email && touched.email && errors.email}</div>

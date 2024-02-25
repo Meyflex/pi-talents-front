@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { useStores } from '../stores';
+import { useStores } from '../../stores';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -126,7 +126,7 @@ const LoginPageAprenti1 = observer(() => {
             <button type="submit" className="mt-4 w-40 mx-16 bg-blue text-main-color font-bold py-2 px-4 rounded ">
               S'inscrire
             </button>
-            <button type="submit" className="mt-4 w-40 bg-nav-bar-selected text-white font-bold py-2 px-4 rounded">
+            <button type="button" onClick={()=>navigate('/apprenti/signIn')} className="mt-4 w-40 bg-nav-bar-selected text-white font-bold py-2 px-4 rounded">
               Me connecter
             </button>
             </div>

@@ -10,8 +10,11 @@ export const GuestRoute: React.FC<GuestRouteProps> = ({ children }) => {
   const { authenticationStore } = useStores();
 
   if (authenticationStore.isAuthenticated) {
-    // Redirect authenticated users to the dashboard or home page
-    return <Navigate to="/dashboard" replace />;
+    if(authenticationStore.UserType === "Apprenti"){
+      return <Navigate to="apprenti/dashboard" replace />;
+    }else if (authenticationStore.UserType === "Maitre"){
+      return <Navigate to="MaitreApprentissage/dashboard" replace />;
+    }
   }
 
   // Render the children (login or public component) if not authenticated
