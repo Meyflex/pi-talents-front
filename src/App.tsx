@@ -20,6 +20,7 @@ const App=observer(() => {
 
       <Route path="/MaitreApprentissage/dashboard" element={<ProtectedRoute><DashboardMaitre /></ProtectedRoute>} />
       <Route path="/MaitreApprentissage/competence" element={<ProtectedRoute><HardSkillMaitre /></ProtectedRoute>} />
+      
       <Route path="/apprenti/dashboard" element={<ProtectedRoute><DashboardMaitre /></ProtectedRoute>} />
       {/* <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} /> */}
       <Route path="*" element={<NotFoundPage />} />

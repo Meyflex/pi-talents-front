@@ -5,7 +5,21 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useStores } from '../../stores';
-
+import React from 'react';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    FormControl,
+    Input,
+    FormLabel,
+    Button
+  } from '@chakra-ui/react'
 
 
 const HardSkillMaitre = observer(() => {
@@ -14,6 +28,15 @@ const HardSkillMaitre = observer(() => {
       const [inputText, setInputText] = useState('');
       const [openCardModal,setOpenCardModal] = useState<boolean>(false);
       const { authenticationStore } = useStores();
+
+      const { isOpen, onOpen, onClose } = useDisclosure()
+
+      const initialRef = React.useRef(null)
+      const finalRef = React.useRef(null)
+
+
+
+
     const val = authenticationStore.jsonData;
 
       const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +51,7 @@ const HardSkillMaitre = observer(() => {
             const config = {
                 headers: { Authorization: `Bearer ${val.token}` }
             };
-        const reponse = await api.get(`/getCompetence?idUser=${val.maitre.id}&idApprenti=${val.maitre.apprentis[0].id}&type=${type}`,config)
+        const reponse = await api.get(`/evaluate/getCompetence?idUser=${val.maitre.id}&idApprenti=${val.maitre.apprentis[0].id}&type=${type}`,config)
         console.log(reponse.data);
     } catch (error : any) {
         console.error('Error sending data:', error.message);
@@ -89,13 +112,43 @@ const HardSkillMaitre = observer(() => {
           className="w-96 outline-none p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-main-color placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-nav-bar-selected sm:text-sm sm:leading-6"
           placeholder="Enter card text" 
         />
-        <button onClick={()=>setOpenCardModal(true)} className=" mx-4 bg-blue text-white font-bold py-2 px-4 rounded ">
+        <button onClick={onOpen} className=" mx-4 bg-blue text-white font-bold py-2 px-4 rounded ">
           +
         </button>
       </div>
       <div className='container grid grid-cols-6 gap-4'>
      
       </div>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+      <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create your account</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>First name</FormLabel>
+              <Input ref={initialRef} placeholder='First name' />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Last name</FormLabel>
+              <Input placeholder='Last name' />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
         </div>
   );
 });
