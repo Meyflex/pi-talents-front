@@ -1,7 +1,7 @@
 // src/components/Navbar.tsx
 import React from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import logo from '../assets/pi.svg'
+import logo from '../assets/PF Logo black 2.png'
 import { useStores } from '../stores';
 const Navbar: React.FC = () => {
 
@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
           {/* This div is for the AppName which you want at the start */}
           <div className="text-lg font-semibold text-main-color">
             <Link to={path} className="text-main-color font-semibold	flex items-center text-2xl	">
-              <img src={logo}  className="mr-5 ml-16 h-11 w-11"  /> Talents
+                <img src={logo}  className="mr-5 ml-16 h-11 w-11"  /> Talents
             </Link>
           </div>
   
