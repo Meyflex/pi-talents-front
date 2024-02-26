@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../../services';
 import Cookies from 'js-cookie';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useToast } from '@chakra-ui/react';
 
 
 const validationSchema = Yup.object().shape({
@@ -18,7 +19,7 @@ const validationSchema = Yup.object().shape({
   const SignInMaitre = observer(() => {
       const { signUpMaitreStore,authenticationStore } = useStores();
       const navigate = useNavigate();
-     
+      const toast = useToast();
       const authenticateMaitre =async ()=>{
         try {
           // Envoi avec Axios
@@ -38,10 +39,27 @@ const validationSchema = Yup.object().shape({
           authenticationStore.setAuthEmail(email);
           authenticationStore.setUserType("Maitre");
           authenticationStore.setUserJson(response.data);
+          if(response.status ===400){
+            toast({
+              title: "Error",
+              description: response.data.message && response.status ===400 ? response.data.message : "An error occurred while fetching data.",
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+              position: "top-right",
+            });
+          }
           navigate('/MaitreApprentissage/dashboard')
         } catch (error : any) {
           console.error('Error sending data:', error.message);
-          
+          toast({
+            title: "Error",
+            description: error.response && error.response.status === 400 ? error.response.data.message : "An error occurred while fetching data.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+            position: "top-right",
+          });
         }
         
       }

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GuestRoute, ProtectedRoute } from './routes';
 import { Navbar } from './components';
-import { SignInMaitre,LoginPageAprenti1,LoginPageApprenti2, NotFoundPage, LoginPageApprenti3, SignUpMaitre, SignInApprenti, DashboardMaitre, HardSkillMaitre } from './views';
+import { SignInMaitre,LoginPageAprenti1,LoginPageApprenti2, NotFoundPage, LoginPageApprenti3, SignUpMaitre, SignInApprenti, DashboardMaitre, HardSkillMaitre, DashboardApprenti, SkillApprenti } from './views';
 
 const App=observer(() => {
   return (
@@ -21,7 +21,8 @@ const App=observer(() => {
       <Route path="/MaitreApprentissage/dashboard" element={<ProtectedRoute><DashboardMaitre /></ProtectedRoute>} />
       <Route path="/MaitreApprentissage/competence" element={<ProtectedRoute><HardSkillMaitre /></ProtectedRoute>} />
       
-      <Route path="/apprenti/dashboard" element={<ProtectedRoute><DashboardMaitre /></ProtectedRoute>} />
+      <Route path="/apprenti/dashboard" element={<ProtectedRoute><DashboardApprenti /></ProtectedRoute>} />
+      <Route path="/apprenti/competence" element={<ProtectedRoute><SkillApprenti /></ProtectedRoute>} />
       {/* <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} /> */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

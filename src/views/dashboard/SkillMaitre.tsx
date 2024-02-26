@@ -1,69 +1,69 @@
 import { api } from '../../services';
-import { Card } from '../../components';
+import {  Card, Competence, MyModal, StudentSelector } from '../../components';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useStores } from '../../stores';
 import React from 'react';
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    useDisclosure,
-    FormControl,
-    Input,
-    FormLabel,
-    Button
-  } from '@chakra-ui/react'
+
 
 
 const HardSkillMaitre = observer(() => {
-      const navigate = useNavigate();
       const location = useLocation();
-      const [inputText, setInputText] = useState('');
-      const [openCardModal,setOpenCardModal] = useState<boolean>(false);
+      const [data, setData] = useState<Competence[]>([]);
       const { authenticationStore } = useStores();
+      const val = authenticationStore.jsonData;
 
-      const { isOpen, onOpen, onClose } = useDisclosure()
+      const [selectedApprenti, setSelectedApprenti] = useState<number>(val.maitre.apprentis[0].id);
+      const [inputText, setInputText] = useState<string>('');
+      const [openModal, setOpenModal] = useState<boolean>(false);
+      const [competenceToUpdate, setCompetenceToUpdate] = useState<Competence>();
 
-      const initialRef = React.useRef(null)
-      const finalRef = React.useRef(null)
+    
 
+  
+    const handleSetComptence = (val : Competence)=>{
+      setCompetenceToUpdate(val)
+    }
 
-
-
-    const val = authenticationStore.jsonData;
-
+    
       const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputText(e.target.value);
       };
+
+      const handleApprentiSelected = (number: number) => {
+        setSelectedApprenti(number);
+      };
       const { type } = location.state || {type:"HARD"}; // Defaulting to an empty object if state is undefined
       const [typeVal,setTypeVal]=useState<string>(type);
+
       const scrollContainerRef = useRef<HTMLDivElement>(null);
     
     const getUserData = async () =>{
+      
+      if (selectedApprenti){
         try {
             const config = {
                 headers: { Authorization: `Bearer ${val.token}` }
             };
-        const reponse = await api.get(`/evaluate/getCompetence?idUser=${val.maitre.id}&idApprenti=${val.maitre.apprentis[0].id}&type=${type}`,config)
-        console.log(reponse.data);
+        const reponse = await api.get<Competence[]>(`/evaluate/getCompetence?idUser=${val.maitre.id}&idApprenti=${selectedApprenti}&type=${typeVal}`,config)
+        setData(reponse.data)
+        
     } catch (error : any) {
         console.error('Error sending data:', error.message);
-        
+
       }
     }
-    useEffect(() => {
-        getUserData()
-      }, []);
-      
-      
+    }
 
+    useEffect(() => {
+      if(openModal ===false){
+        getUserData()
+      }
+      }, [selectedApprenti,openModal,typeVal]);
+
+      
   useEffect(() => {
     // Ensure the ref current value exists
     const scrollContainer = scrollContainerRef.current;
@@ -87,13 +87,13 @@ const HardSkillMaitre = observer(() => {
 
 
   return (
-    <div className="flex justify-center flex-col items-center" >
+    <div className="relative flex justify-center flex-col items-center" >
         <div className="container flex overflow-x-auto overflow-y-hidden max-h-[50px] scroll-smooth hide-scrollbar my-12 " ref={scrollContainerRef}>
         <div className="flex space-x-4 text-md font-semibold font-display">
             {/* Items */}
-            <div className={`${ typeVal === 'HARD' ?"bg-blue" :'bg-main-color' } min-w-[200px] h-[50px] text-white rounded-lg flex justify-center items-center`} onClick={()=>setTypeVal('HARD')}>Hard Skills</div>
-            <div className={`${ typeVal === 'SOFT' ?"bg-blue" :'bg-main-color' } min-w-[200px] h-[50px] text-white rounded-lg flex justify-center items-center`} onClick={()=>setTypeVal('SOFT')}>Soft Skills</div>
-            <div className={`${ typeVal === 'TOOL' ?"bg-blue" :'bg-main-color' } min-w-[200px] h-[50px] text-white rounded-lg flex justify-center items-center`} onClick={()=>setTypeVal('TOOL')}>Outils de Travail</div>
+            <div role='button' className={`${ typeVal === 'HARD' ?"bg-blue" :'bg-main-color' } min-w-[200px] h-[50px] text-white rounded-lg flex justify-center items-center`} onClick={()=>setTypeVal('HARD')}>Hard Skills</div>
+            <div role='button' className={`${ typeVal === 'SOFT' ?"bg-blue" :'bg-main-color' } min-w-[200px] h-[50px] text-white rounded-lg flex justify-center items-center`} onClick={()=>setTypeVal('SOFT')}>Soft Skills</div>
+            <div role='button' className={`${ typeVal === 'TOOL' ?"bg-blue" :'bg-main-color' } min-w-[200px] h-[50px] text-white rounded-lg flex justify-center items-center`} onClick={()=>setTypeVal('TOOL')}>Outils de Travail</div>
             <div className='bg-main-color min-w-[220px] h-[50px] text-white rounded-lg flex justify-center items-center text-center'>Suivre mon Apprenti</div>
             <div className='bg-main-color min-w-[220px] h-[50px] text-white rounded-lg flex justify-center items-center text-center'>Contacter mon apprenti</div>
             <div className='bg-main-color min-w-[200px] h-[50px] text-white rounded-lg flex justify-center items-center'>Bilans</div>
@@ -112,43 +112,23 @@ const HardSkillMaitre = observer(() => {
           className="w-96 outline-none p-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-main-color placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-nav-bar-selected sm:text-sm sm:leading-6"
           placeholder="Enter card text" 
         />
-        <button onClick={onOpen} className=" mx-4 bg-blue text-white font-bold py-2 px-4 rounded ">
+        <button onClick={()=>setOpenModal(true)} className=" mx-4 bg-blue text-white font-bold py-2 px-4 rounded ">
           +
         </button>
       </div>
       <div className='container grid grid-cols-6 gap-4'>
-     
+      {data.map((competence) => (
+        <Card key={competence.id} competence={competence} setCompetence={handleSetComptence} setOpenModal={setOpenModal} />
+      ))}
       </div>
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-      <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>First name</FormLabel>
-              <Input ref={initialRef} placeholder='First name' />
-            </FormControl>
+      
+      <MyModal comptence={competenceToUpdate} inputText={inputText} isOpen={openModal} onClose={() => {setOpenModal(false);setCompetenceToUpdate(undefined);setInputText('')}} apprentiId={selectedApprenti} type={typeVal} />
 
-            <FormControl mt={4}>
-              <FormLabel>Last name</FormLabel>
-              <Input placeholder='Last name' />
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+        <div className='absolute -top-14 right-24 h-32 w-40'>
+          <StudentSelector
+            apprentis={val.maitre.apprentis}
+            onApprentiSelected={handleApprentiSelected} />
+          </div>
         </div>
   );
 });

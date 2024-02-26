@@ -1,2 +1,5 @@
 export * from './Navbar'
 export * from './Card'
+export * from './StudentSelector'
+export * from './ModalCreateUpdateCompetence'
+export * from './ModalAnswerApprenti'

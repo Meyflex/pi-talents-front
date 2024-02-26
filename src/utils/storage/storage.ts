@@ -6,7 +6,7 @@
  */
 export async function loadString(key: string): Promise<string | null> {
   try {
-    return await localStorage.getItem(key)
+    return await sessionStorage.getItem(key)
   } catch {
     // not sure why this would fail... even reading the RN docs I'm unclear
     return null
@@ -21,7 +21,7 @@ export async function loadString(key: string): Promise<string | null> {
  */
 export async function saveString(key: string, value: string): Promise<boolean> {
   try {
-    localStorage.setItem(key, value)
+    sessionStorage.setItem(key, value)
     return true
   } catch {
     return false
@@ -35,7 +35,7 @@ export async function saveString(key: string, value: string): Promise<boolean> {
  */
 export async function load(key: string): Promise<unknown | null> {
   try {
-    const almostThere = await localStorage.getItem(key)
+    const almostThere = await sessionStorage.getItem(key)
     return JSON.parse(almostThere ?? "")
   } catch {
     return null
@@ -50,7 +50,7 @@ export async function load(key: string): Promise<unknown | null> {
  */
 export async function save(key: string, value: unknown): Promise<boolean> {
   try {
-    localStorage.setItem(key, JSON.stringify(value))
+    sessionStorage.setItem(key, JSON.stringify(value))
     return true
   } catch {
     return false
@@ -64,7 +64,7 @@ export async function save(key: string, value: unknown): Promise<boolean> {
  */
 export async function remove(key: string): Promise<void> {
   try {
-    localStorage.removeItem(key)
+    sessionStorage.removeItem(key)
   } catch {}
 }
 
@@ -73,6 +73,6 @@ export async function remove(key: string): Promise<void> {
  */
 export async function clear(): Promise<void> {
   try {
-    localStorage.clear()
+    sessionStorage.clear()
   } catch {}
 }

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../stores';
 import { Formik, Field } from 'formik';
@@ -92,7 +91,7 @@ function base64ToBlob(base64: string, contentType: string): Blob {
         
         }}
       >
-        {({ handleSubmit, setFieldValue, errors, touched }) => (
+        {({ handleSubmit, errors, touched }) => (
           <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-4 grid-flow-row'>
           
             

@@ -1,2 +1,4 @@
 export * from './dashboardMaitre'
-export * from './HardSkillMaitre'
+export * from './SkillMaitre'
+export * from './SkillApprenti'
+export * from './dashboardApprenti'
