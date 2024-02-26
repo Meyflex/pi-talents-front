@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../services';
 import Cookies from 'js-cookie';
+import { useToast } from '@chakra-ui/react';
 
 
 const validationSchema = Yup.object().shape({
@@ -28,7 +29,8 @@ function base64ToBlob(base64: string, contentType: string): Blob {
   const LoginPageApprenti3 = observer(() => {
       const { signUpApprentiStore,authenticationStore } = useStores();
       const navigate = useNavigate();
-      
+      const toast = useToast();
+
       
       const handleCreateApprenti =async ()=>{
         try {
@@ -62,10 +64,26 @@ function base64ToBlob(base64: string, contentType: string): Blob {
         authenticationStore.setAuthEmail(email);
         authenticationStore.setUserType("Apprenti");
         authenticationStore.setUserJson(response.data)
+        if(response.status ===400){
+          toast({
+            title: "Error",
+            description: response.data.message && response.status ===400 ? response.data.message : "An error occurred while fetching data.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+            position: "top-right",
+          });
+        }
         navigate('/apprenti/dashboard')
-      } catch (error) {
-        console.error('Error sending data:', error);
-        throw error;
+      } catch (error:any) {
+          toast({
+            title: "Error",
+            description: error.response && error.response.status === 400 ? error.response.data.message : "An error occurred while fetching data.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+            position: "top-right",
+          });
       }
       }
       

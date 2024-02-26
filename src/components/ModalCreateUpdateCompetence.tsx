@@ -103,8 +103,9 @@ const MyModal: React.FC<Props> = ({ isOpen, onClose,inputText ,apprentiId,type,c
                 }
             }
 
-
-        onClose();
+            setNomCompetence('');
+            setNote('')
+            onClose();
     } catch (error : any) {
         console.error('Error sending data:', error.message);
         
@@ -159,7 +160,9 @@ const MyModal: React.FC<Props> = ({ isOpen, onClose,inputText ,apprentiId,type,c
           <Button colorScheme='nav-bar-selected' onClick={handleSubmit} className='w-40 font-display bg-nav-bar-selected text-white font-bold py-2 px-4 rounded' mr={3}>
             J'envoie
           </Button>
-          <Button onClick={onClose}>Annuler</Button>
+          <Button onClick={()=>{setNomCompetence('');
+            setNote('');
+            onClose();}}>Annuler</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

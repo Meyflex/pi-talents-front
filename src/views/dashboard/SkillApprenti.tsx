@@ -52,14 +52,7 @@ const SkillApprenti = observer(() => {
           }
         
     } catch (error : any) {
-        toast({
-            title: "Error",
-            description: error.response && error.response.status === 400 ? error.response.data.message : "An error occurred while fetching data.",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-            position: "top-right",
-          });
+        
       }
     
     }
