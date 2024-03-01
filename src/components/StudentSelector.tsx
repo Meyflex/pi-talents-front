@@ -32,7 +32,7 @@ export const StudentSelector: React.FC<StudentSelectorProps> = ({ apprentis, onA
   
     return (
       <Menu >
-        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width="full" sx={{
+        <MenuButton as={Button}  width="full%" sx={{
             border: 'none',
             boxShadow: 'none',
             justifyContent: 'space-between',
@@ -46,6 +46,7 @@ export const StudentSelector: React.FC<StudentSelectorProps> = ({ apprentis, onA
           <Flex align="center">
             {selectedApprenti ? (
               <>
+                  <div className='text-left mr-3' >{selectedApprenti.nom}<br/>{selectedApprenti.prenom}</div>
                 <Image
                   borderRadius='10px'
                   boxSize="2rem"
@@ -53,7 +54,6 @@ export const StudentSelector: React.FC<StudentSelectorProps> = ({ apprentis, onA
                   alt={`${selectedApprenti.nom} ${selectedApprenti.prenom}`}
                   mr="12px"
                 />
-                <Text isTruncated>{selectedApprenti.nom} {selectedApprenti.prenom}</Text>
               </>
             ) : (
               'Select etudiant'
@@ -74,7 +74,7 @@ export const StudentSelector: React.FC<StudentSelectorProps> = ({ apprentis, onA
                 alt={`${apprenti.nom} ${apprenti.prenom}`}
                 mr="12px"
               />
-              <Text>{apprenti.nom} {apprenti.prenom}</Text>
+              <text>{apprenti.nom}  {apprenti.prenom}</text>
             </MenuItem>
           ))}
         </MenuList>

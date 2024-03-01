@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
     const location = useLocation();
     const { authenticationStore } = useStores();
 
-    const path =!authenticationStore.isAuthenticated? '/' : authenticationStore.UserType === "Maitre" ? '/MaitreApprentissage/dashboard' : '/apprenti/dashboard'
+    const path =!authenticationStore.isAuthenticated? '/apprenti/signUpOne' : authenticationStore.UserType === "Maitre" ? '/MaitreApprentissage/dashboard' : '/apprenti/dashboard'
 
     const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, isAuthenticated: boolean) => {
       if (isAuthenticated) {
@@ -55,10 +55,9 @@ const Navbar: React.FC = () => {
   </li>
   <li className='flex'>
     <NavLink 
-      to="/" 
-      className={({ isActive }) => 
-        `${isActive ? "bg-nav-bar-selected" : "text-gray-200"} transition-all duration-300 ease-in-out text-sm font-semibold px-4 text-center rounded-full min-h-7 min-w-40 flex justify-center items-center`
-      }
+      to="/cfa" 
+      className={() => getNavLinkClass('/cfa')}
+
       onClick={(e) => handleNavLinkClick(e, authenticationStore.isAuthenticated)}
 
     >

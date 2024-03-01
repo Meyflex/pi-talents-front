@@ -19,7 +19,7 @@ const HardSkillMaitre = observer(() => {
       const [inputText, setInputText] = useState<string>('');
       const [openModal, setOpenModal] = useState<boolean>(false);
       const [competenceToUpdate, setCompetenceToUpdate] = useState<Competence>();
-
+      const [openModalDelete,setOpenModalDelete]=useState<boolean>(false);
     
 
   
@@ -61,7 +61,7 @@ const HardSkillMaitre = observer(() => {
       if(openModal ===false){
         getUserData()
       }
-      }, [selectedApprenti,openModal,typeVal]);
+      }, [selectedApprenti,openModal,typeVal,openModalDelete]);
 
       
   useEffect(() => {
@@ -118,11 +118,11 @@ const HardSkillMaitre = observer(() => {
       </div>
       <div className='container grid grid-cols-6 gap-4'>
       {data.map((competence) => (
-        <Card key={competence.id} competence={competence} setCompetence={handleSetComptence} setOpenModal={setOpenModal} />
+        <Card hideDelete key={competence.id} openModalDelete={openModalDelete} setOpenModalDelete={setOpenModalDelete} competence={competence} setCompetence={handleSetComptence} setOpenModal={setOpenModal} />
       ))}
       </div>
       
-      <MyModal comptence={competenceToUpdate} inputText={inputText} isOpen={openModal} onClose={() => {setOpenModal(false);setCompetenceToUpdate(undefined);setInputText('')}} apprentiId={selectedApprenti} type={typeVal} />
+      <MyModal  comptence={competenceToUpdate} inputText={inputText}  isOpen={openModal} onClose={() => {setOpenModal(false);setCompetenceToUpdate(undefined);setInputText('')}} apprentiId={selectedApprenti} type={typeVal} />
 
         <div className='absolute -top-14 right-24 h-32 w-40'>
           <StudentSelector

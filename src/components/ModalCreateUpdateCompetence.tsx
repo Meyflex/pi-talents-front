@@ -114,7 +114,7 @@ const MyModal: React.FC<Props> = ({ isOpen, onClose,inputText ,apprentiId,type,c
   };
 
   return (
-    <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+    <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent className='font-display text-white font-bold '>
         <ModalHeader>Ajoutez les Skills de votre apprenti</ModalHeader>

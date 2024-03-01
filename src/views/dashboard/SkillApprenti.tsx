@@ -104,7 +104,7 @@ const SkillApprenti = observer(() => {
         
       <div className='container grid grid-cols-6 gap-4'>
       {data.map((competence) => (
-        <Card hideGradeMaitre key={competence.id} competence={competence} setCompetence={handleSetComptence} setOpenModal={setOpenModal} />
+        <Card hideGradeMaitre key={competence.id} competence={competence} setCompetence={handleSetComptence} setOpenModal={setOpenModal} setOpenModalDelete={()=>{} } openModalDelete={false} />
       ))}
       </div>
       {competenceToUpdate &&

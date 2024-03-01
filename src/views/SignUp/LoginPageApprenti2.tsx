@@ -54,7 +54,7 @@ const LoginPageApprenti2 = observer(() => {
         }}
       >
         {({ handleSubmit, setFieldValue, errors, touched }) => (
-          <form onSubmit={handleSubmit} className='grid grid-cols-4 gap-4 grid-flow-row'>
+          <form onSubmit={handleSubmit} className='h-[500px] grid grid-cols-4 gap-4 grid-flow-row h-'>
             {/* Bio Field */}
             
             <div className=" flex flex-row items-center justify-between max-w-3xl w-1/2 mb-4 col-start-1">
