@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Menu, MenuButton, MenuList, MenuItem, Button, Image, Text, Flex } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { Menu, MenuButton, MenuList, MenuItem, Button, Image, Flex } from '@chakra-ui/react';
 
 export type Apprenti = {
   id: number;

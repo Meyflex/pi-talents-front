@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import logo from '../assets/delete.svg'
 import {
   Modal,
@@ -9,9 +9,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
   useToast,
 } from '@chakra-ui/react';
 import { api } from '../services';
