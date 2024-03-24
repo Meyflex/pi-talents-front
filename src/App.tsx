@@ -1,7 +1,7 @@
 import './index.css'
 import { observer } from 'mobx-react-lite'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { GuestRoute, ProtectedRoute } from './routes';
+import { GuestRoute, ProtectedRoute ,SpetialRoute} from './routes';
 import { Navbar } from './components';
 import {CFA, SignInMaitre,LoginPageAprenti1,LoginPageApprenti2, NotFoundPage, LoginPageApprenti3, SignUpMaitre, SignInApprenti, DashboardMaitre, HardSkillMaitre, DashboardApprenti, SkillApprenti } from './views';
 const App=observer(() => {
@@ -23,7 +23,7 @@ const App=observer(() => {
       <Route path="/apprenti/dashboard" element={<ProtectedRoute><DashboardApprenti /></ProtectedRoute>} />
       <Route path="/apprenti/competence" element={<ProtectedRoute><SkillApprenti /></ProtectedRoute>} />
       <Route path="/cfa" element={<GuestRoute><CFA/></GuestRoute>} />
-      {/* <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} /> */}
+      <Route path="/" element={<SpetialRoute><CFA/></SpetialRoute>} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </Router>

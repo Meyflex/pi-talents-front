@@ -8,12 +8,18 @@ interface ProtectedRouteProps {
     children: React.ReactElement;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+export const SpetialRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { authenticationStore } = useStores();
 
   if (!authenticationStore.isAuthenticated) {
     // Redirect to login page if not authenticated
     return <Navigate to="/apprenti/signUpOne" replace />;
+  }else if(authenticationStore.isAuthenticated) {
+    if(authenticationStore.UserType === "Apprenti"){
+      return <Navigate to="apprenti/dashboard" replace />;
+    }else if (authenticationStore.UserType === "Maitre"){
+      return <Navigate to="MaitreApprentissage/dashboard" replace />;
+    }
   }
 
   // Render the children (protected component) if authenticated
